@@ -1,0 +1,26 @@
+enable 
+configure terminal
+hostname RT-02
+banner motd "ACESSO PARA PESSOAS DO TI"
+enable secret SenhadaEnable
+interface gigabitEthernet 0/0
+ip address 10.40.16.1 255.255.240.0
+description REDE 10.40.16.1/20
+no shutdown
+exit
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+password SenhadaVTY
+tansport input ssh
+exec-timeout 3
+login local
+exit
+username administrador privilege 15 secret SenhaADM
+username estagiario privilege 1 secret SenhaEST
+login block-for 240 attempts 3 within 60
+security password min-legth 8
+service password-encryption
+do wr
